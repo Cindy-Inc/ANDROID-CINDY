@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">App_Cindy</string>
+    <string name="app_name">Cindy</string>
+    <string name="fala1">Olá, como vai você?</string>
+    <string name="fala2">Oi, me vê uma pizza!</string>
+    <string name="fala3">Qual sabor você gostaria de escolher?</string>
+    <string name="fala4">meia de mussarela e meia portuguesa</string>
+    <string name="fala_user">Digite o que você gostaria de dizer:</string>
+    <string name="Enter">Falar</string>
 </resources>
