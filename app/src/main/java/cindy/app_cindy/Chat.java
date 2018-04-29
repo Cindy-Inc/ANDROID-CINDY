@@ -3,22 +3,13 @@ package cindy.app_cindy;
 public class Chat {
     private int id;
     private String mensagem;
-    private String nome;
+    private int sizeText;
 
-    public Chat(String nome, String mensagem, int id) {
-        this.nome = nome;
+    public Chat(String mensagem, int id, int sizeText) {
         this.mensagem = mensagem;
         this.id = id;
+        this.sizeText = sizeText;
     }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public int getId() {
         return id;
     }
@@ -33,5 +24,13 @@ public class Chat {
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
+    }
+
+    public int getSizeText() {
+        return sizeText;
+    }
+
+    public void setSizeText(int sizeText) {
+        this.sizeText = sizeText;
     }
 }

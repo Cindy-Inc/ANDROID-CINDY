@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -27,21 +29,15 @@ public class ChatAdapter extends ArrayAdapter<Chat> {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.linha, parent, false);
-
         TextView mensagem = (TextView) rowView.findViewById(R.id.mensagem);
-        TextView nome = (TextView) rowView.findViewById(R.id.nome);
-
+        TextView mensagem2 = (TextView) rowView.findViewById(R.id.mensagem2);
         if(elementos.get(position).getId()==1) {
-            nome.setText(elementos.get(position).getNome());
-            mensagem.setText(elementos.get(position).getMensagem());
-            mensagem.setBackgroundResource(R.drawable.bubble_yellow);
-            mensagem.setGravity(Gravity.LEFT);
+            mensagem2.setText(elementos.get(position).getMensagem());
+            mensagem2.setBackgroundResource(R.drawable.bubble_yellow);
         }
         else {
-            nome.setText(elementos.get(position).getNome());
             mensagem.setText(elementos.get(position).getMensagem());
             mensagem.setBackgroundResource(R.drawable.bubble_green);
-            mensagem.setGravity(Gravity.RIGHT);
         }
         return rowView;
     }
