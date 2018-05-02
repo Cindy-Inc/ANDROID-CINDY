@@ -1,7 +1,11 @@
 package cindy.app_cindy;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,13 +29,39 @@ public class MainCindy extends DebugActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_cindy);
 
+
         ListView lista = (ListView)findViewById(R.id.lvEscolas);
         ArrayAdapter adapter = new ChatAdapter(this, adicionarChat());
         lista.setAdapter(adapter);
 
-
         txtUser = (TextView) findViewById(R.id.txtUser);
+        ActionBar actionBar = getActionBar();
+        actionBar.setTitle("Cindy");
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Infla o menu com os botões da action bar
+        getMenuInflater().inflate(R.menu.menu_main, menu);
 
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_search) {
+            toast("Clicou no Search!");
+            return true;
+        } else if (id == R.id.action_refresh) {
+            toast("Clicou no Refresh!");
+            return true;
+        } else if (id == R.id.action_settings) {
+            toast("Clicou no Settings!");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    private void toast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     public void enviar(View v){
@@ -79,5 +109,6 @@ public class MainCindy extends DebugActivity {
 
         return Chat2;
     }
+
 
 }

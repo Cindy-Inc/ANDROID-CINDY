@@ -6,4 +6,7 @@
     <string name="fala4">meia de mussarela e meia portuguesa</string>
     <string name="fala_user">Digite o que você gostaria de dizer:</string>
     <string name="Enter">Falar</string>
+    <string name="action_settings">Configurações</string>
+    <string name="action_search">Pesquisar</string>
+    <string name="action_refresh">Atualizar</string>
 </resources>
