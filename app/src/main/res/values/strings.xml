@@ -9,4 +9,10 @@
     <string name="action_settings">Configurações</string>
     <string name="action_search">Pesquisar</string>
     <string name="action_refresh">Atualizar</string>
+    <string name="action_logout">Sair</string>
+    <string name="usuario">Usuário:</string>
+    <string name="senha">Senha:</string>
+    <string name="button_login">Entrar</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="EsqSenha">Esqueci minha senha</string>
 </resources>
