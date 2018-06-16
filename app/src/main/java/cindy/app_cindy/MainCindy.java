@@ -119,22 +119,26 @@ public class MainCindy extends DebugActivity {
             String var = String.valueOf(val);
             this.varNumber = val;
 
-            ArrayAdapter adapter2 = new ChatAdapter(this, adicionarChat2());
-            ListView lista = (ListView) findViewById(R.id.lvEscolas);
-            lista.setAdapter(adapter2);
-
+            adicionarChat2();
 
             Toast.makeText(this, var, Toast.LENGTH_SHORT).show();
-            adicionarChat2();
+            //adicionarChat2();
             EditText send = (EditText) findViewById(R.id.txtUser);
             send.setText("");
-            this.progressoTotal = this.progressoTotal - 1;
+
         }
 
     }
 
+    public void updateChat(ArrayList<Chat> chatArr) {
+        ArrayAdapter adapter2 = new ChatAdapter(this, chatArr);
+        ListView lista = (ListView) findViewById(R.id.lvEscolas);
+        lista.setAdapter(adapter2);
+        this.progressoTotal = this.progressoTotal - 1;
+    }
 
-    public ArrayList<Chat> adicionarChat2() {
+
+    public void adicionarChat2() {
 
         this.progressoUser[this.progressoTotal] = txtUser.getText().toString();
         //this.progressoCindy[this.progressoTotal] = "Enviado texto de número " + String.valueOf(this.progressoTotal+1);
@@ -164,6 +168,20 @@ public class MainCindy extends DebugActivity {
                         JSONArray arr = jObj.getJSONArray("text");
                         progressoCindy[progressoTotal] = arr.getString(0);
                         Log.d("Response", response.toString());
+
+                        ArrayList<Chat> Chat3 = new ArrayList<Chat>();
+                        int i;
+
+                        for (i = -1; i < progressoTotal; i++) {
+                            Chat c = new Chat(progressoUser[i + 1], 2, varNumber);
+                            Chat3.add(c);
+                            c = new Chat(progressoCindy[i + 1], 1, varNumber);
+                            Chat3.add(c);
+                        }
+                        progressoTotal = progressoTotal + 1;
+
+                        updateChat(Chat3);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -186,18 +204,6 @@ public class MainCindy extends DebugActivity {
         }
 
 
-
-        ArrayList<Chat> Chat3 = new ArrayList<Chat>();
-        int i;
-
-            for (i = -1; i < progressoTotal; i++) {
-                Chat c = new Chat(this.progressoUser[i+1], 2,varNumber);
-                Chat3.add(c);
-                c = new Chat(this.progressoCindy[i+1], 1,varNumber);
-                Chat3.add(c);
-            }
-        this.progressoTotal = this.progressoTotal + 1;
-        return Chat3;
     }
 
     private ArrayList<Chat> adicionarChat() {
