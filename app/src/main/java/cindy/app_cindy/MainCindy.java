@@ -1,7 +1,9 @@
 package cindy.app_cindy;
 
 import android.app.ActionBar;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +14,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.SearchView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+
 
 public class MainCindy extends DebugActivity {
 
@@ -35,29 +56,6 @@ public class MainCindy extends DebugActivity {
         ActionBar actionBar = getActionBar();
         actionBar.setTitle("Cindy");
     }
-
- /*   public void logar(View v) {
-        TextView tLogin = (TextView) findViewById(R.id.tLogin);
-        TextView tSenha = (TextView) findViewById(R.id.tSenha);
-        String login = tLogin.getText().toString();
-        String senha = tSenha.getText().toString();
-        if (login.equals("admin") && senha.equals("admin")) {
-
-            this.verdade = 1;
-            setContentView(R.layout.activity_main_cindy);
-            ListView lista = (ListView) findViewById(R.id.lvEscolas);
-            ArrayAdapter adapter = new ChatAdapter(this, adicionarChat());
-            lista.setAdapter(adapter);
-
-            txtUser = (TextView) findViewById(R.id.txtUser);
-            ActionBar actionBar = getActionBar();
-            actionBar.setTitle("Cindy");
-
-
-        } else {
-            alert("Login e senha incorretos.");
-        }
-    }*/
 
     private void alert(String s){
         //A classe Toast mostra um alerta temporário muito comum no Android
@@ -136,10 +134,59 @@ public class MainCindy extends DebugActivity {
     }
 
 
-    public ArrayList<Chat> adicionarChat2(){
+    public ArrayList<Chat> adicionarChat2() {
 
         this.progressoUser[this.progressoTotal] = txtUser.getText().toString();
-        this.progressoCindy[this.progressoTotal] = "Enviado texto de número " + String.valueOf(this.progressoTotal+1);
+        //this.progressoCindy[this.progressoTotal] = "Enviado texto de número " + String.valueOf(this.progressoTotal+1);
+        //MensagemAsyncTask ws = new MensagemAsyncTask();
+        //ws.execute();
+        //"+this.progressoUser[this.progressoTotal]
+
+
+        final String URL = "https://cindy-app.mybluemix.net/api/mensagem/";
+
+        try{
+            JSONObject envio = new JSONObject();
+            envio.put("texto", this.progressoUser[this.progressoTotal]);
+
+            RequestQueue fila = Volley.newRequestQueue(this);
+            Requisicao req = new Requisicao();
+            ErroRequisicao erro = new ErroRequisicao();
+            JsonObjectRequest reqJson = new JsonObjectRequest(URL, envio, new Response.Listener<JSONObject>()
+            {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        // display response
+                        JSONObject jObj = response.getJSONObject("output");
+                        //DebugActivity.resposta = jObj.getJSONArray("text").toString();
+                        Log.i("INFO", jObj.getString("text").toString());
+                        JSONArray arr = jObj.getJSONArray("text");
+                        progressoCindy[progressoTotal] = arr.getString(0);
+                        Log.d("Response", response.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Error.Response", error.getMessage());
+                        }
+                    }
+            );
+            fila.add(reqJson);
+
+           // this.progressoCindy[this.progressoTotal] = DebugActivity.resposta;
+        }catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+
+
         ArrayList<Chat> Chat3 = new ArrayList<Chat>();
         int i;
 
@@ -161,5 +208,66 @@ public class MainCindy extends DebugActivity {
         return Chat2;
     }
 
+    /*
+    private class MensagemAsyncTask extends AsyncTask<String, Void, String> {
 
+        private static final String Bluemix_Url = "https://cindy-app.mybluemix.net/api/mensagem";
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            try {
+                URL url = new URL(Bluemix_Url);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                String urlParameters  = "text="+progressoUser[progressoTotal];
+                byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
+                int    postDataLength = postData.length;
+
+                //connection.setRequestMethod("GET");
+                //connection.setRequestProperty("Accept", "application/json");
+               // connection.setRequestProperty();
+                connection.setDoOutput( true );
+                connection.setInstanceFollowRedirects( false );
+                connection.setRequestMethod( "POST" );
+                connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
+                connection.setRequestProperty( "charset", "utf-8");
+                connection.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
+                connection.setUseCaches( false );
+
+                if (connection.getResponseCode() == 200) {
+                    BufferedReader stream = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    String linha = "";
+                    StringBuilder resposta = new StringBuilder();
+                    while ((linha = stream.readLine()) != null) {
+                        resposta.append(linha);
+                    }
+                    connection.disconnect();
+                    return resposta.toString();
+                }
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (s != null) {
+                try {
+                    progressoCindy[progressoTotal] = s;
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                }
+            }
+        }
+    }*/
 }
