@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends DebugActivity{
+public class MainActivity extends DebugActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,13 +16,14 @@ public class MainActivity extends DebugActivity{
         ActionBar actionBar = getActionBar();
         actionBar.setTitle("Login");
     }
+
     public void logar(View v) {
         TextView tLogin = (TextView) findViewById(R.id.tLogin);
         TextView tSenha = (TextView) findViewById(R.id.tSenha);
         String login = tLogin.getText().toString();
         String senha = tSenha.getText().toString();
         if (login.equals("admin") && senha.equals("admin")) {
-            Intent intent = new Intent( getApplicationContext(),MainCindy.class);
+            Intent intent = new Intent(getApplicationContext(), MainCindy.class);
             startActivity(intent);
 
         } else {
@@ -30,9 +31,9 @@ public class MainActivity extends DebugActivity{
         }
     }
 
-    public void cadastro(View v){
+    public void cadastro(View v) {
 
-        Intent intent = new Intent( getApplicationContext(),Cadastro.class);
+        Intent intent = new Intent(getApplicationContext(), Cadastro.class);
         startActivity(intent);
 
     }
@@ -42,10 +43,12 @@ public class MainActivity extends DebugActivity{
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
 
     }
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            // Infla o menu com os botões da action bar
-            getMenuInflater().inflate(R.menu.menu_login, menu);
-            return true;
-        }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Infla o menu com os botões da action bar
+        getMenuInflater().inflate(R.menu.menu_login, menu);
+        return true;
+    }
+
 }

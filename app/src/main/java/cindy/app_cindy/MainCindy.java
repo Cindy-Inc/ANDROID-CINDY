@@ -1,7 +1,9 @@
 package cindy.app_cindy;
 
 import android.app.ActionBar;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,8 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.SearchView;
 
-<<<<<<< master
-=======
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -23,8 +23,17 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
->>>>>>> local
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+
 
 public class MainCindy extends DebugActivity {
 
@@ -47,29 +56,6 @@ public class MainCindy extends DebugActivity {
         ActionBar actionBar = getActionBar();
         actionBar.setTitle("Cindy");
     }
-
- /*   public void logar(View v) {
-        TextView tLogin = (TextView) findViewById(R.id.tLogin);
-        TextView tSenha = (TextView) findViewById(R.id.tSenha);
-        String login = tLogin.getText().toString();
-        String senha = tSenha.getText().toString();
-        if (login.equals("admin") && senha.equals("admin")) {
-
-            this.verdade = 1;
-            setContentView(R.layout.activity_main_cindy);
-            ListView lista = (ListView) findViewById(R.id.lvEscolas);
-            ArrayAdapter adapter = new ChatAdapter(this, adicionarChat());
-            lista.setAdapter(adapter);
-
-            txtUser = (TextView) findViewById(R.id.txtUser);
-            ActionBar actionBar = getActionBar();
-            actionBar.setTitle("Cindy");
-
-
-        } else {
-            alert("Login e senha incorretos.");
-        }
-    }*/
 
     private void alert(String s){
         //A classe Toast mostra um alerta temporário muito comum no Android
@@ -133,51 +119,32 @@ public class MainCindy extends DebugActivity {
             String var = String.valueOf(val);
             this.varNumber = val;
 
-            ArrayAdapter adapter2 = new ChatAdapter(this, adicionarChat2());
-            ListView lista = (ListView) findViewById(R.id.lvEscolas);
-            lista.setAdapter(adapter2);
-
+            adicionarChat2();
 
             Toast.makeText(this, var, Toast.LENGTH_SHORT).show();
-<<<<<<< master
-            adicionarChat2();
-=======
->>>>>>> local
+            //adicionarChat2();
             EditText send = (EditText) findViewById(R.id.txtUser);
             send.setText("");
-            this.progressoTotal = this.progressoTotal - 1;
+
         }
 
     }
 
-<<<<<<< master
-=======
     public void updateChat(ArrayList<Chat> chatArr) {
         ArrayAdapter adapter2 = new ChatAdapter(this, chatArr);
         ListView lista = (ListView) findViewById(R.id.lvEscolas);
         lista.setAdapter(adapter2);
+        //this.progressoTotal = this.progressoTotal - 1;
     }
 
->>>>>>> local
 
-    public ArrayList<Chat> adicionarChat2(){
+    public void adicionarChat2() {
 
         this.progressoUser[this.progressoTotal] = txtUser.getText().toString();
-<<<<<<< master
-        this.progressoCindy[this.progressoTotal] = "Enviado texto de número " + String.valueOf(this.progressoTotal+1);
-        ArrayList<Chat> Chat3 = new ArrayList<Chat>();
-        int i;
-
-            for (i = -1; i < progressoTotal; i++) {
-                Chat c = new Chat(this.progressoUser[i+1], 2,varNumber);
-                Chat3.add(c);
-                c = new Chat(this.progressoCindy[i+1], 1,varNumber);
-                Chat3.add(c);
-            }
-        this.progressoTotal = this.progressoTotal + 1;
-        return Chat3;
-=======
         //this.progressoCindy[this.progressoTotal] = "Enviado texto de número " + String.valueOf(this.progressoTotal+1);
+        //MensagemAsyncTask ws = new MensagemAsyncTask();
+        //ws.execute();
+        //"+this.progressoUser[this.progressoTotal]
 
 
         final String URL = "https://cindy-app.mybluemix.net/api/mensagem/";
@@ -187,10 +154,10 @@ public class MainCindy extends DebugActivity {
             JSONObject input = new JSONObject();
             input.put("text", (String) this.progressoUser[this.progressoTotal]);
             envio.put("input", input);
-
             if(context != null) {
                 envio.put("context", context);
             }
+
             RequestQueue fila = Volley.newRequestQueue(this);
             Requisicao req = new Requisicao();
             ErroRequisicao erro = new ErroRequisicao();
@@ -202,11 +169,9 @@ public class MainCindy extends DebugActivity {
                         // display response
                         JSONObject jObj = response.getJSONObject("output");
                         context = response.getJSONObject("context");
-                        //input = jObj;
                         Log.i("INFO", jObj.getString("text").toString());
                         JSONArray arr = jObj.getJSONArray("text");
                         progressoCindy[progressoTotal] = arr.getString(0);
-
                         Log.d("Response", response.toString());
 
                         ArrayList<Chat> Chat3 = new ArrayList<Chat>();
@@ -237,25 +202,83 @@ public class MainCindy extends DebugActivity {
             );
             fila.add(reqJson);
 
+           // this.progressoCindy[this.progressoTotal] = DebugActivity.resposta;
         }catch(JSONException e)
         {
             e.printStackTrace();
         }
 
 
->>>>>>> local
     }
 
     private ArrayList<Chat> adicionarChat() {
         ArrayList<Chat> Chat2 = new ArrayList<Chat>();
-        Chat c = new Chat("Digite uma mensagem para poder conversar com a assistente virtual.", 1, 0);
+        Chat c = new Chat("Olá, tudo bem? como posso ajudá-lo?", 1, 0);
         Chat2.add(c);
 
         return Chat2;
     }
 
-<<<<<<< master
+    /*
+    private class MensagemAsyncTask extends AsyncTask<String, Void, String> {
 
-=======
->>>>>>> local
+        private static final String Bluemix_Url = "https://cindy-app.mybluemix.net/api/mensagem";
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            try {
+                URL url = new URL(Bluemix_Url);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                String urlParameters  = "text="+progressoUser[progressoTotal];
+                byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
+                int    postDataLength = postData.length;
+
+                //connection.setRequestMethod("GET");
+                //connection.setRequestProperty("Accept", "application/json");
+               // connection.setRequestProperty();
+                connection.setDoOutput( true );
+                connection.setInstanceFollowRedirects( false );
+                connection.setRequestMethod( "POST" );
+                connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
+                connection.setRequestProperty( "charset", "utf-8");
+                connection.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
+                connection.setUseCaches( false );
+
+                if (connection.getResponseCode() == 200) {
+                    BufferedReader stream = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    String linha = "";
+                    StringBuilder resposta = new StringBuilder();
+                    while ((linha = stream.readLine()) != null) {
+                        resposta.append(linha);
+                    }
+                    connection.disconnect();
+                    return resposta.toString();
+                }
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (s != null) {
+                try {
+                    progressoCindy[progressoTotal] = s;
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                }
+            }
+        }
+    }*/
 }
