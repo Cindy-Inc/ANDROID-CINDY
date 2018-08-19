@@ -28,14 +28,14 @@
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:hint="Digite o que você quer falar"
-            android:maxWidth="265dp"
-            android:textSize="15dp"
             android:ems="10"
-            android:inputType="text"
-            android:maxLines="3"
+            android:hint="Digite o que você quer falar"
+            android:inputType="text|textMultiLine"
+            android:maxLines="5"
+            android:maxWidth="265dp"
             android:text=""
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textSize="15dp" />
 
         <Button
             android:id="@+id/btnEnviar"

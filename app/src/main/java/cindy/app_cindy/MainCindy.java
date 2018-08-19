@@ -118,7 +118,6 @@ public class MainCindy extends DebugActivity {
             int val = txtUser.length();
             String var = String.valueOf(val);
             this.varNumber = val;
-
             adicionarChat2();
 
             Toast.makeText(this, var, Toast.LENGTH_SHORT).show();
@@ -140,12 +139,7 @@ public class MainCindy extends DebugActivity {
 
     public void adicionarChat2() {
 
-        this.progressoUser[this.progressoTotal] = txtUser.getText().toString();
-        //this.progressoCindy[this.progressoTotal] = "Enviado texto de número " + String.valueOf(this.progressoTotal+1);
-        //MensagemAsyncTask ws = new MensagemAsyncTask();
-        //ws.execute();
-        //"+this.progressoUser[this.progressoTotal]
-
+        this.progressoUser[this.progressoTotal] = txtUser.getText().toString().replaceAll("\n", "<br>");
 
         final String URL = "https://cindy-app.mybluemix.net/api/mensagem/";
 
@@ -202,7 +196,6 @@ public class MainCindy extends DebugActivity {
             );
             fila.add(reqJson);
 
-           // this.progressoCindy[this.progressoTotal] = DebugActivity.resposta;
         }catch(JSONException e)
         {
             e.printStackTrace();
@@ -213,72 +206,9 @@ public class MainCindy extends DebugActivity {
 
     private ArrayList<Chat> adicionarChat() {
         ArrayList<Chat> Chat2 = new ArrayList<Chat>();
-        Chat c = new Chat("Olá, tudo bem? como posso ajudá-lo?", 1, 0);
+        Chat c = new Chat("Digite uma mensagem para falar com a assistente virtual.", 1, 0);
         Chat2.add(c);
 
         return Chat2;
     }
-
-    /*
-    private class MensagemAsyncTask extends AsyncTask<String, Void, String> {
-
-        private static final String Bluemix_Url = "https://cindy-app.mybluemix.net/api/mensagem";
-
-        @Override
-        protected String doInBackground(String... strings) {
-
-            try {
-                URL url = new URL(Bluemix_Url);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-                String urlParameters  = "text="+progressoUser[progressoTotal];
-                byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
-                int    postDataLength = postData.length;
-
-                //connection.setRequestMethod("GET");
-                //connection.setRequestProperty("Accept", "application/json");
-               // connection.setRequestProperty();
-                connection.setDoOutput( true );
-                connection.setInstanceFollowRedirects( false );
-                connection.setRequestMethod( "POST" );
-                connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
-                connection.setRequestProperty( "charset", "utf-8");
-                connection.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
-                connection.setUseCaches( false );
-
-                if (connection.getResponseCode() == 200) {
-                    BufferedReader stream = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    String linha = "";
-                    StringBuilder resposta = new StringBuilder();
-                    while ((linha = stream.readLine()) != null) {
-                        resposta.append(linha);
-                    }
-                    connection.disconnect();
-                    return resposta.toString();
-                }
-
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            if (s != null) {
-                try {
-                    progressoCindy[progressoTotal] = s;
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-                }
-            }
-        }
-    }*/
 }

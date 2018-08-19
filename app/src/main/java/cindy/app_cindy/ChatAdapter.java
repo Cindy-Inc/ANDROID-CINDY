@@ -32,11 +32,11 @@ public class ChatAdapter extends ArrayAdapter<Chat> {
         TextView mensagem = (TextView) rowView.findViewById(R.id.mensagem);
         TextView mensagem2 = (TextView) rowView.findViewById(R.id.mensagem2);
         if(elementos.get(position).getId()==1) {
-            mensagem2.setText(elementos.get(position).getMensagem());
+            mensagem2.setText(elementos.get(position).getMensagem().replaceAll("<br>", "\n").replaceAll("<Br>", "\n"));
             mensagem2.setBackgroundResource(R.drawable.bubble_yellow);
         }
         else {
-            mensagem.setText(elementos.get(position).getMensagem());
+            mensagem.setText(elementos.get(position).getMensagem().replaceAll("<br>", "\n"));
             mensagem.setBackgroundResource(R.drawable.bubble_green);
         }
         return rowView;

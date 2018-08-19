@@ -6,7 +6,6 @@ import android.util.Log;
 
 public class DebugActivity extends Activity {
     protected static final String TAG = "Cindy";
-  //  public static String resposta;
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
