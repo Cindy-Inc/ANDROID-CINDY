@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools = "http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,11 +8,15 @@
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
     android:paddingTop="8dp"
+    android:background="#ffffff"
     tools:context=".MainCindy">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="#ffffff"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
@@ -19,13 +24,13 @@
             android:id="@+id/lvEscolas"
             android:layout_width="match_parent"
             android:layout_height="440dp"
-            android:divider="@null"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentTop="true"
+            android:divider="@null" />
 
         <EditText
             android:id="@+id/txtUser"
-            android:layout_width="270dp"
+            android:layout_width="306dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:ems="10"
@@ -37,15 +42,18 @@
             android:textColor="#000000"
             android:textSize="15dp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnEnviar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="69dp"
+            android:background="#ffffff"
+            android:layout_height="36dp"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/txtUser"
+            android:contentDescription="@string/Enter"
             android:onClick="enviar"
-            android:text="Enviar"
+            android:src="@drawable/btn_user"
             tools:ignore="OnClick" />
+
 
     </RelativeLayout>
 

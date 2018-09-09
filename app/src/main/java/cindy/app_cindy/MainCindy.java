@@ -76,10 +76,10 @@ public class MainCindy extends DebugActivity {
         if (id == R.id.action_search) {
             toast("Clicou no Search!");
             return true;
-        } else if (id == R.id.action_refresh) {
+        } /*else if (id == R.id.action_refresh) {
             toast("Clicou no Refresh!");
             return true;
-        } else if (id == R.id.action_settings) {
+        }*/ else if (id == R.id.action_settings) {
             toast("Clicou nas configurações!");
             return true;
         } else if (id == R.id.action_logout) {
