@@ -80,6 +80,6 @@
         android:text="Próximo"
         android:textSize="13dp"
         android:layout_marginTop="15dp"
-        android:onClick="cadastro3"
+        android:onClick="cadastro2"
         android:layout_gravity="center"/>
 </LinearLayout>

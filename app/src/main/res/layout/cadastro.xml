@@ -81,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="13dp"
-        android:onClick="cadastro2"
+        android:onClick="cadastro1"
         android:text="Li os termos e condições de uso e quero continuar" />
 
 </LinearLayout>
