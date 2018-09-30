@@ -35,7 +35,7 @@
         android:text="Endereço:" />
 
     <EditText
-        android:id="@+id/endereco"
+        android:id="@+id/nomeUsuario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -50,8 +50,5 @@
         android:onClick="cadastro3"
         android:text="Concluir"
         android:textSize="13dp" />
-
-
-
 
 </LinearLayout>
