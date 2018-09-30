@@ -1,9 +1,7 @@
 package cindy.app_cindy;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,8 +11,6 @@ public class MainActivity extends DebugActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        //ActionBar actionBar = getActionBar();
-        //actionBar.setTitle("Login");
 
     }
 
@@ -45,11 +41,5 @@ public class MainActivity extends DebugActivity {
 
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Infla o menu com os botões da action bar
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
-    }*/
 
 }
