@@ -21,7 +21,7 @@
         android:text="Escolha um Nome de Usuário:" />
 
     <EditText
-        android:id="@+id/txtSafety"
+        android:id="@+id/txtNumCPF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
