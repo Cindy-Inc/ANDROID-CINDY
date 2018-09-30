@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width='match_parent'
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width='match_parent'
     android:layout_height='match_parent'
     xmlns:android='http://schemas.android.com/apk/res/android'>
 
@@ -18,12 +19,25 @@
             android:layout_gravity="center_horizontal"
             android:orientation="vertical">
 
+
+            <ImageView
+                android:id="@+id/CindyFace"
+                android:layout_width="42dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="left"
+                android:background="#ffffff"
+                android:contentDescription="@string/Enter"
+                android:src="@drawable/cindy3" />
+
             <TextView
                 android:id="@+id/mensagem2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:maxWidth="250dp"
+                android:layout_marginLeft="20dp"
                 android:text=""
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
@@ -35,7 +49,6 @@
                 android:maxWidth="250dp"
                 android:text=""
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
-
 
         </LinearLayout>
     </LinearLayout>

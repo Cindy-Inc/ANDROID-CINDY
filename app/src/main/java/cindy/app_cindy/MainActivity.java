@@ -13,8 +13,9 @@ public class MainActivity extends DebugActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        ActionBar actionBar = getActionBar();
-        actionBar.setTitle("Login");
+        //ActionBar actionBar = getActionBar();
+        //actionBar.setTitle("Login");
+
     }
 
     public void logar(View v) {
@@ -44,11 +45,11 @@ public class MainActivity extends DebugActivity {
 
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Infla o menu com os botões da action bar
         getMenuInflater().inflate(R.menu.menu_login, menu);
         return true;
-    }
+    }*/
 
 }

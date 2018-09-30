@@ -23,7 +23,7 @@
         <ListView
             android:id="@+id/lvEscolas"
             android:layout_width="match_parent"
-            android:layout_height="440dp"
+            android:layout_height="590dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:divider="@null" />

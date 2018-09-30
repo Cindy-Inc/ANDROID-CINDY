@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.SearchView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -33,6 +34,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class MainCindy extends DebugActivity {
@@ -42,6 +46,7 @@ public class MainCindy extends DebugActivity {
     private int progressoTotal = 0;
     private String progressoUser[] = new String[1000];
     private String progressoCindy[] = new String[1000];
+    private List<String[]> progresso = new ArrayList<>();
     JSONObject context;
 
     @Override
@@ -53,15 +58,15 @@ public class MainCindy extends DebugActivity {
         lista.setAdapter(adapter);
 
         txtUser = (TextView) findViewById(R.id.txtUser);
-        ActionBar actionBar = getActionBar();
-        actionBar.setTitle("Cindy");
+       // ActionBar actionBar = getActionBar();
+       // actionBar.setTitle("Cindy");
     }
 
     private void alert(String s){
         //A classe Toast mostra um alerta temporário muito comum no Android
         Toast.makeText(this, s,Toast.LENGTH_SHORT).show();
     }
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Infla o menu com os botões da action bar
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -69,29 +74,29 @@ public class MainCindy extends DebugActivity {
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(onSearch());
         return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_search) {
-            toast("Clicou no Search!");
-            return true;
-        } /*else if (id == R.id.action_refresh) {
-            toast("Clicou no Refresh!");
-            return true;
-        }*/ else if (id == R.id.action_settings) {
-            toast("Clicou nas configurações!");
-            return true;
-        } else if (id == R.id.action_logout) {
-            toast("Clicou no logout!");
+    }*/
+   // @Override
+   // public boolean onOptionsItemSelected(MenuItem item) {
+       // int id = item.getItemId();
+       // if (id == R.id.action_search) {
+            //toast("Clicou no Search!");
+            //return true;
+        //} /*else if (id == R.id.action_refresh) {
+           // toast("Clicou no Refresh!");
+           // return true;
+        //}*/ else if (id == R.id.action_settings) {
+           // toast("Clicou nas configurações!");
+          //  return true;
+        //} else if (id == R.id.action_logout) {
+           // toast("Clicou no logout!");
 
-            finish();
+           // finish();
 
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-    private SearchView.OnQueryTextListener onSearch(){
+         //   return true;
+       // }
+      //  return super.onOptionsItemSelected(item);
+    //}
+   /* private SearchView.OnQueryTextListener onSearch(){
         return new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -107,7 +112,7 @@ public class MainCindy extends DebugActivity {
             }
         };
 
-    }
+    }*/
 
     private void toast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
@@ -120,7 +125,7 @@ public class MainCindy extends DebugActivity {
             this.varNumber = val;
             adicionarChat2();
 
-            Toast.makeText(this, var, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, var, Toast.LENGTH_SHORT).show();
             //adicionarChat2();
             EditText send = (EditText) findViewById(R.id.txtUser);
             send.setText("");
@@ -139,47 +144,61 @@ public class MainCindy extends DebugActivity {
 
     public void adicionarChat2() {
 
-        this.progressoUser[this.progressoTotal] = txtUser.getText().toString().replaceAll("\n", "<br>");
+//        this.progressoUser[this.progressoTotal] = txtUser.getText().toString().replaceAll("\n", "<br>");
+        String[] userTxt = {"user", txtUser.getText().toString().replaceAll("\n", "<br>")};
+        this.progresso.add(userTxt);
 
-        final String URL = "https://cindy-app.mybluemix.net/api/mensagem/";
+        final String URL = "https://3cindy-app.mybluemix.net/api/v1/message/";
 
         try{
             JSONObject envio = new JSONObject();
-            JSONObject input = new JSONObject();
-            input.put("text", (String) this.progressoUser[this.progressoTotal]);
-            envio.put("input", input);
+            envio.put("text", userTxt[1]);
             if(context != null) {
                 envio.put("context", context);
             }
 
             RequestQueue fila = Volley.newRequestQueue(this);
-            Requisicao req = new Requisicao();
-            ErroRequisicao erro = new ErroRequisicao();
             JsonObjectRequest reqJson = new JsonObjectRequest(URL, envio, new Response.Listener<JSONObject>()
             {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
                         // display response
-                        JSONObject jObj = response.getJSONObject("output");
-                        context = response.getJSONObject("context");
-                        Log.i("INFO", jObj.getString("text").toString());
-                        JSONArray arr = jObj.getJSONArray("text");
-                        progressoCindy[progressoTotal] = arr.getString(0);
+                        JSONObject respObj = response.getJSONObject("response");
+                        JSONObject jObj = respObj.getJSONObject("output");
+                        context = respObj.getJSONObject("context");
+
+                        JSONArray genericObj = jObj.getJSONArray("generic");
+                        for (int i =0; i < genericObj.length(); i++) {
+                            JSONObject obj = genericObj.getJSONObject(i);
+//                            progressoCindy[progressoTotal] = obj.getString("text");
+                            String cindyTxt[] = {"cindy", obj.getString("text")};
+                            progresso.add(cindyTxt);
+                        }
+//                        JSONArray arr = jObj.getJSONArray("text");
+//                        progressoCindy[progressoTotal] = arr.getString(0);
                         Log.d("Response", response.toString());
 
                         ArrayList<Chat> Chat3 = new ArrayList<Chat>();
-                        int i;
 
-                        for (i = -1; i < progressoTotal; i++) {
-                            Chat c = new Chat(progressoUser[i + 1], 2, varNumber);
-                            Chat3.add(c);
-                            c = new Chat(progressoCindy[i + 1], 1, varNumber);
-                            Chat3.add(c);
+                        for(int i = 0; i < progresso.size(); i++) {
+                            if (progresso.get(i)[0].equals("cindy")) {
+                                Chat3.add(new Chat(progresso.get(i)[1], 1, varNumber));
+                            } else {
+                                Chat3.add(new Chat(progresso.get(i)[1], 2, varNumber));
+                            }
                         }
-                        progressoTotal = progressoTotal + 1;
-
                         updateChat(Chat3);
+
+
+//                        for (int i = -1; i < progressoTotal; i++) {
+//                            Chat c = new Chat(progressoUser[i + 1], 2, varNumber);
+//                            Chat3.add(c);
+//                            c = new Chat(progressoCindy[i],1, varNumber);
+//                            Chat3.add(c);
+//                        }
+//                        progressoTotal = progressoTotal + 1;
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -193,7 +212,14 @@ public class MainCindy extends DebugActivity {
                             Log.d("Error.Response", error.getMessage());
                         }
                     }
-            );
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YmFmZmU0ODNkNTU3MDA3MDVmNWJkYWIiLCJ0eXBlIjoidXN1YXJpbyIsImVtYWlsIjoiYWRtaW5AY2luZHkuY28iLCJuYW1lIjoiQ0lORFkiLCJhY3RpdmUiOnRydWUsImFkZHJlc3MiOiJBdi4gTGlucyBkZSBWYXNjb25jZWxvcyIsIm51bWJlciI6IjExNTciLCJpYXQiOjE1MzgyNjcxOTZ9.0M7mxcnd33ZPIHwDpzvU20GBDGt4qC-db3-VQ_1OApQ");
+                    return headers;
+                }
+            };
             fila.add(reqJson);
 
         }catch(JSONException e)

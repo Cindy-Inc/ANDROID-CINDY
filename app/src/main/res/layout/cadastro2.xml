@@ -73,6 +73,19 @@
         android:layout_marginTop="10dp"
         android:inputType="date" />
 
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Digite Seu CPF:" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number" />
+
     <Button
         android:id="@+id/btncadastro2"
         android:layout_width="120dp"

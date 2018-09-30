@@ -10,23 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="3° Passo: dados do cartão: "
+        android:text="3° Passo: dados do usuário: "
         android:textSize="20dp" />
-
-    <TextView
-        android:id="@+id/txtView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Digite seu CPF:" />
-
-    <EditText
-        android:id="@+id/txtNumCPF"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:inputType="number" />
 
     <TextView
         android:id="@+id/textView5"
@@ -42,6 +27,19 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="text|textCapCharacters|number" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Endereço:" />
+
+    <EditText
+        android:id="@+id/endereco"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPostalAddress" />
 
     <Button
         android:id="@+id/btncadastro3"
